@@ -1,0 +1,46 @@
+# =============================================================================
+# Sampling-Based Trajectory Planner Parameters
+# =============================================================================
+# This node generates collision-free quintic polynomial trajectories by
+# sampling candidates in trajectory space and scoring them against the
+# OctoMap.  It handles both the NAVIGATE_TO_CAVE phase (via service call)
+# and the EXPLORE_CAVE phase (via periodic frontier-goal replanning).
+# =============================================================================
+
+/**:
+  ros__parameters:
+
+    # ---- Sampling parameters ------------------------------------------------
+    num_samples: 10                 # Total candidate trajectory budget per plan
+    min_duration_factor: 1.0        # Fastest trajectory = nominal_T × this
+    max_duration_factor: 1.8        # Slowest trajectory = nominal_T × this
+    lateral_spread: 3.0             # Lateral offset range for goal perturbation [m]
+    max_recursion_depth: 6          # Max depth for recursive mid-point splitting
+
+    # ---- Safety & collision ---------------------------------------------------
+    safety_radius: 2.0              # Clearance margin around the drone [m]
+    collision_check_dt: 0.2         # Time step for trajectory collision checks [s]
+
+    # ---- Speed profiles -------------------------------------------------------
+    navigate_to_cave_speed: 20.0    # Cruise speed during NAVIGATE_TO_CAVE [m/s]
+    cave_exploration_speed: 8.0     # Cruise speed during EXPLORE_CAVE [m/s]
+
+    # ---- Planning behaviour ---------------------------------------------------
+    planning_frequency: 2.0         # How often to replan during exploration [Hz]
+    lookahead_distance: 20.0        # Replan when closer than this to goal [m]
+    terminal_speed_fraction: 0.7    # Keep this fraction of speed at goal (0=stop)
+    goal_debounce_distance: 5.0     # Ignore goal shifts smaller than this [m]
+    min_goal_distance: 5.0          # Skip goals closer than this [m]
+
+    # ---- Topic names ----------------------------------------------------------
+    octomap_topic: "octomap_binary"
+    pose_topic: "pose_est"
+    frontier_goal_topic: "frontier_goal"
+    state_mode_topic: "stm_mode"
+    odom_topic: "current_state_est"
+    desired_state_topic: "desired_state"
+    trajectory_complete_topic: "trajectory_complete"
+    planned_trajectory_topic: "planned_trajectory"
+
+    # ---- Service names --------------------------------------------------------
+    start_navigation_service: "start_navigation"

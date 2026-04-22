@@ -1,0 +1,49 @@
+# =============================================================================
+# Controller Configuration
+# =============================================================================
+# SE(3) geometric tracking controller parameters.
+# Reference: Lee et al. "Geometric tracking control of a quadrotor UAV on SE(3)"
+#
+# All values below are the defaults. Override them here to tune the controller.
+# =============================================================================
+
+/**:
+  ros__parameters:
+    # ---- Controller Gains ----------------------------------------------------
+    # Higher kx/kv  = more aggressive position tracking (risk of oscillation)
+    # Higher kr/komega = faster attitude correction
+
+    kx: 12.0              # Position error gain
+    kv: 5.0               # Velocity damping gain
+    kr: 8.5               # Rotation error gain
+    komega: 1.1           # Angular velocity damping gain
+
+    # ---- Control Loop --------------------------------------------------------
+
+    control_loop_hz: 1000.0   # Main loop frequency [Hz]
+
+    # ---- Physical Constants --------------------------------------------------
+    # Must match the simulated (or real) quadrotor model
+
+    mass: 1.0                 # Total mass [kg]
+    gravity: 9.81             # Gravitational acceleration [m/s^2]
+    arm_length: 0.3           # Center-of-mass to propeller distance [m]
+    lift_coefficient: 1e-3    # Propeller lift coeff: thrust = cf * w^2
+    drag_coefficient: 1e-5    # Propeller drag coeff: torque = cd * w^2
+
+    # ---- Inertia Matrix (diagonal) ------------------------------------------
+
+    inertia_xx: 0.01          # Moment of inertia about x-axis (roll)  [kg*m^2]
+    inertia_yy: 0.01          # Moment of inertia about y-axis (pitch) [kg*m^2]
+    inertia_zz: 0.02          # Moment of inertia about z-axis (yaw)   [kg*m^2]
+
+    # ---- ROS Topics ----------------------------------------------------------
+
+    desired_state_topic: "desired_state"          # Subscribed (MultiDOFJointTrajectoryPoint)
+    current_state_topic: "current_state_est"      # Subscribed (Odometry)
+    rotor_speed_cmd_topic: "rotor_speed_cmds"     # Published  (Actuators)
+
+    # ---- Queue Sizes ---------------------------------------------------------
+
+    subscriber_queue_size: 10
+    publisher_queue_size: 10

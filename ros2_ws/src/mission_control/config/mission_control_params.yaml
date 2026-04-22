@@ -1,0 +1,42 @@
+# =============================================================================
+# Mission Control Parameters
+# =============================================================================
+# Configuration for the mission state machine that orchestrates:
+#   IDLE → TAKEOFF → NAVIGATE_TO_CAVE → EXPLORE_CAVE → FINISHED
+# =============================================================================
+
+mission_control_node:
+  ros__parameters:
+
+    # ---- State machine behaviour -------------------------------------------
+    state_machine_hz: 10.0      # State machine loop frequency [Hz]
+    idle_duration: 3.0          # Time to wait in IDLE before takeoff [s]
+
+    # ---- Takeoff -----------------------------------------------------------
+    takeoff_altitude: 9.0       # Target altitude for takeoff [m]
+
+    # ---- Transition tolerances ---------------------------------------------
+    position_tolerance: 0.3     # Distance threshold to consider "arrived" [m]
+    velocity_tolerance: 0.1     # Speed threshold to consider "stopped" [m/s]
+
+    # ---- Topic names -------------------------------------------------------
+    current_state_topic: "current_state_est"
+    desired_state_topic: "desired_state"
+    trajectory_complete_topic: "trajectory_complete"
+    state_mode_topic: "stm_mode"
+
+    # ---- Service names -----------------------------------------------------
+    start_navigation_service: "start_navigation"
+    start_exploration_service: "start_exploration"
+
+    # ---- Queue sizes -------------------------------------------------------
+    subscriber_queue_size: 10
+    publisher_queue_size: 10
+
+    # ---- Cave entrance waypoints -------------------------------------------
+    # Ordered waypoints from takeoff position to cave entrance.
+    # The drone flies through these sequentially before starting exploration.
+    cave_entrance_waypoints:
+      x: [-48.0, -108.875, -180.0, -251.375, -323.0]
+      y: [10.0, 10.0, 10.0, 10.0, 10.0]
+      z: [20.0, 25.0, 25.0, 20.0, 15.0]

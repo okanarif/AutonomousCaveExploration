@@ -1,0 +1,29 @@
+# =============================================================================
+# Lantern Detection Parameters
+# =============================================================================
+# Detects lanterns in the cave using the semantic camera and depth image.
+# Each detected lantern is uniquely identified by checking distance to
+# previously known lanterns (distance_threshold).
+# =============================================================================
+
+/**:
+  ros__parameters:
+
+    # ---- Detection thresholds -----------------------------------------------
+    distance_threshold: 100.0       # Min distance to consider a lantern "new" [m]
+    drone_lantern_dist: 30.0        # Max drone-to-lantern distance for valid detection [m]
+
+    # ---- Coordinate frames --------------------------------------------------
+    camera_frame: "camera"
+    world_frame: "world"
+
+    # ---- Topic names (subscribers) ------------------------------------------
+    odom_topic: "/current_state_est"
+    semantic_image_topic: "/Quadrotor/Sensors/SemanticCamera/image_raw"
+    depth_image_topic: "/realsense/depth/image"
+    camera_info_topic: "/realsense/depth/camera_info"
+
+    # ---- Topic names (publishers) -------------------------------------------
+    lantern_positions_topic: "/lantern_positions"
+    detected_lanterns_topic: "/detected_lanterns"
+    num_lanterns_topic: "/num_lanterns"

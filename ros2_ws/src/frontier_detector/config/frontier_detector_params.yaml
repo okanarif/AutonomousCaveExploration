@@ -1,0 +1,49 @@
+# =============================================================================
+# Frontier Detector Configuration
+# =============================================================================
+# Parameters for 3D frontier detection during cave exploration.
+# All values below are the defaults. Override them here to tune behavior.
+# =============================================================================
+
+/**:
+  ros__parameters:
+    # ---- Clustering & Scoring ------------------------------------------------
+
+    neighborcount_threshold: 30     # Minimum cluster density to accept a frontier
+    bandwidth: 15.0                 # Mean-shift Gaussian kernel bandwidth [m]
+    k_distance: -0.5               # Score weight: distance (negative = prefer farther)
+    k_neighborcount: 0.1            # Score weight: cluster density reward
+    k_yaw: 40.0                     # Score weight: yaw alignment penalty
+    distance_limit: 350.0           # Maximum goal distance from drone [m]
+    occ_neighbor_threshold: 1       # Max occupied corner-neighbors to accept a frontier
+    max_frontiers: 500              # Cap on frontier points fed to mean-shift (random subsample)
+
+    # ---- Distance Filtering --------------------------------------------------
+
+    min_frontier_distance: 20.0     # Ignore frontiers closer than this [m]
+    max_frontier_distance: 100.0     # Ignore frontiers farther than this [m]
+
+    # ---- Cave Entrance Guard -------------------------------------------------
+
+    cave_entry_x: -321.0            # Cave entrance X coordinate [m]
+    cave_entry_y: 10.0              # Cave entrance Y coordinate [m]
+    cave_entry_z: 15.0              # Cave entrance Z coordinate [m]
+    cave_entry_tolerance: 25        # Guard zone around entrance [m]
+
+    # ---- Timing --------------------------------------------------------------
+
+    publish_goal_frequency: 2.0     # Goal publish rate [Hz]
+
+    # ---- ROS Topics ----------------------------------------------------------
+
+    octomap_topic: "octomap_binary"               # Subscribed (octomap_msgs/Octomap)
+    pose_topic: "pose_est"                         # Subscribed (geometry_msgs/PoseStamped)
+    state_topic: "stm_mode"                        # Subscribed (std_msgs/String)
+    frontiers_marker_topic: "frontiers"            # Published  (visualization_msgs/MarkerArray)
+    goal_pose_topic: "frontier_goal_pose"          # Published  (geometry_msgs/PoseStamped)
+    goal_point_topic: "frontier_goal"              # Published  (geometry_msgs/Point)
+
+    # ---- ROS Services --------------------------------------------------------
+
+    octomap_reset_service: "octomap_server/reset"  # Client (std_srvs/Empty)
+    start_exploration_service: "start_exploration"  # Server (std_srvs/Trigger)

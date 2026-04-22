@@ -1,0 +1,4 @@
+geometry_msgs/PoseArray waypoints
+---
+bool success
+string message
