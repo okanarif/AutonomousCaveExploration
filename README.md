@@ -1,5 +1,5 @@
-https://github.com/user-attachments/assets/6dba888a-013f-4a5f-9c72-589300eedba9
 
+https://github.com/okanarif/AutonomousCaveExploration/issues/1#issue-4310063659
 # Autonomous Cave Exploration (ROS 2)
 
 This repository contains a ROS 2-based stack for **autonomous cave exploration** with a quadrotor.
